@@ -1,0 +1,46 @@
+{
+"uid" : "59",
+"uri" : "{domain}/businesses/109649/sale/invoices/3291078919",
+"contact" : {
+	"uid" : "34",
+	"uri" : "{domain}/businesses/109649/contacts/34",
+	"name" : "Bob's Supplies"
+	},
+"invoiceNumber" : "IV00000229",
+"issueDate" : "2014-08-19",
+"dueDate" : "2014-08-26",
+"gstInclusive" : true,
+"lines" : [{
+	"account" : {
+		"uid" : "6422566",
+		"uri" : "{domain}/businesses/109649/generalledger/accounts/6422566",
+		"name" : "Other income",
+		"displayId" : "8-1400"
+		},
+	"item" : {
+		"uid" : "27",
+		"uri" : "{domain}/businesses/109649/inventory/items/27",
+		"number" : "Item 133",
+		"name" : "Hammer"
+	},
+	"taxType" : {
+		"uid" : "10",
+		"uri" : "{domain}/tax/types/10",
+		"code" : "GST",
+		"name" : "Goods & Services Tax"
+		},
+	"unitOfMeasure" : "Qty",
+	"description" : "Hammers",
+	"quantity" : 2,
+	"unitPrice" : 5.99,
+	"total" : 11.98
+	}],
+"notes" : "An invoice note",
+"purchaseOrderNumber" : "PO0000056",
+"total" : 11.98,
+"gst" : 1.09,
+"amountPaid" : 0,
+"amountDue" : 11.98,
+"status" : "Open",
+"displayStatus" : "Not Paid"
+}

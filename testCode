@@ -1,0 +1,6 @@
+d = {}
+d['new'] = []
+d['new'].append([1,2])
+print(d)
+d['new'].append([3,4])
+print(d)
