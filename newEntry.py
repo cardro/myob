@@ -26,43 +26,68 @@ import mongoCode
 data = {}
 invoiceDict = {}
 
-client = MongoClient('localhost', 27017)
-db = client["test"]
+# client = MongoClient('localhost', 27017)
+# db = client["test"]
 
 
 invoiceDict = {
  'uid': '2',
  'invoiceNumber': 'IV00000002',
  'issueDate': '2014-08-19', 
- 'itemName': 'salt', 
+ 'itemName': 'soda water', 
  'itemUid': '2', 
- 'unitOfMeasure': 'Weight', 
- 'quantity': 7500, 
- 'total': 10, 
+ 'unitOfMeasure': 'Volume', 
+ 'quantity': 750, 
+ 'total': 1000, 
  'purchaseOrderNumber': 'PO0000002'}
 
-
-
-def flow(invoiceDict):
+def invoiceFlow(invoiceDict):
+	print("invoiceFlow reached")
 	docExists = mongoCode.checkIfItemExistsInInventory(invoiceDict)
-	# yes
+	print("Item exists in inventory : {0}".format(docExists))
 	priceChange = False
+	cocktailPriceChange = False
+	oldPrice = 0
+	newPrice = 0
 	if docExists is True:
 		priceChange = mongoCode.checkForPriceChange(invoiceDict)
-		# yes
+		print("price change : {0}".format(priceChange))
 		mongoCode.updateInventoryWithNewInvoice(invoiceDict)
-		# change invoice
 		if priceChange:
-			mongoCode.cocktailPriceDifference(invoiceDict)
-			# Check whats the change amount
 			mongoCode.updateCocktailPrice(invoiceDict)
-			# update price change
-
+			cocktailPriceChange, oldPrice,newPrice = mongoCode.cocktailPriceDifference(invoiceDict)
+			if cocktailPriceChange:
+				print("change of price")
 	else:
 		mongoCode.createInventoryItemWithNewInvoice(invoiceDict)
 		mongoCode.createIngredientItemWithNewInvoice(invoiceDict)
-		# add ingredient to inventory
-	# print(docExists)
-flow(invoiceDict)
-mongoCode.setCocktailNamesToIngredients()
+	print(oldPrice)
+	print(newPrice)
 
+	if newPrice-oldPrice > 1:
+		print("Notify")
+
+invoiceFlow(invoiceDict)
+# mongoCode.setCocktailNamesToIngredients()
+# mongoCode.cocktailPriceDifference(invoiceDict)
+
+saleDict = {
+	"uid" : "59",
+	"invoiceNumber" : "IV00000229",
+	"issueDate" : "2014-08-19",
+	"name" : "long island iced tea",
+	"quantity" : 1,
+	"purchaseOrderNumber" : "PO0000056",
+	"price" : 4
+}
+
+def salesFlow(saleDict):
+	print("sale flow called")
+	# mongoCode.addSaleToDB(saleDict)
+	# mongoCode.updateStock(saleDict)
+
+# saleFlow(saleDict)
+
+# sumProfit = mongoCode.checkNotify()
+# if(sumProfit > 10 or sumProfit < -10):
+# 	print("Notify {0}".format(sumProfit))
